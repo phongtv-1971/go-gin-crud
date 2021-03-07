@@ -28,6 +28,7 @@ func NewCourseHandler(g *gin.Engine, us domain.CourseUseCase) {
 	g.POST("/courses", handler.Store)
 	g.GET("/course/:id", handler.GetByID)
 	g.PUT("/course/:id", handler.Update)
+	g.DELETE("/course/:id", handler.Delete)
 }
 
 // FetchCourse return all course
@@ -100,6 +101,22 @@ func (c *CourseHandler) Update(g *gin.Context) {
 		return
 	}
 	g.JSON(http.StatusOK, course)
+}
+
+func (c *CourseHandler) Delete(g *gin.Context) {
+	idP, err := strconv.Atoi(g.Param("id"))
+	if err != nil {
+		g.JSON(http.StatusNotFound, domain.ErrNotFound.Error())
+		return
+	}
+
+	id := int64(idP)
+	err = c.CUsecase.Delete(id)
+	if err != nil {
+		g.JSON(getStatusCode(err), ResponseError{Message: err.Error()})
+		return
+	}
+	g.JSON(http.StatusNoContent, nil)
 }
 
 func getStatusCode(err error) int {

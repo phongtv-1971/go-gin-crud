@@ -38,6 +38,7 @@ func (c *courceUsecase) Store(co *domain.Course) (err error) {
 	return
 }
 
-func (c *courceUsecase) Delete(id int64) error {
-	return nil
+func (c *courceUsecase) Delete(id int64) (err error) {
+	err = c.courseRepo.Delete(id)
+	return
 }

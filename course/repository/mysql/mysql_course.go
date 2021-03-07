@@ -51,5 +51,14 @@ func (m *mysqlCourseRepository) Store(co *domain.Course) error {
 }
 
 func (m *mysqlCourseRepository) Delete(id int64) error {
-	return nil
+	existedCourse, err := m.GetByID(id)
+	if err != nil {
+		return err
+	}
+	if existedCourse.ID > 0 {
+		err := m.Conn.Delete(&existedCourse)
+		return err.Error
+	} else {
+		return domain.ErrNotFound
+	}
 }
