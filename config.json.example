@@ -1,0 +1,16 @@
+{
+  "release": false,
+  "server": {
+    "address": ":9090"
+  },
+  "context":{
+    "timeout":2
+  },
+  "database": {
+      "host": "127.0.0.1",
+      "port": "3306",
+      "user": "",
+      "pass": "",
+      "name": "go_gin_crud"
+  }
+}
