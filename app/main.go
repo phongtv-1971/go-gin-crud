@@ -70,6 +70,8 @@ func main() {
 	g := gin.New()
 	middL := _courseHttpDeliveryMiddleware.InitMiddleware()
 	g.Use(middL.CORS())
+	g.Use(gin.Logger())
+	g.Use(gin.Recovery())
 
 	courseRepo := _courseRepo.NewMysqlCourseRepository(dbConn)
 
